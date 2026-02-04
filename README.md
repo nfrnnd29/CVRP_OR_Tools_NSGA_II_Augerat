@@ -1,1 +1,9 @@
 # CVRP_OR_Tools_NSGA_II_Augerat
+
+This project solves the Capacitated Vehicle Routing Problem (CVRP) on Augerat benchmark instances using two complementary solvers: a fast, constraint-driven pipeline built with Google OR-Tools and an evolutionary solver based on NSGA-II. Raw instance data is converted into structured inputs, including a JSON format that stores depot/customer coordinates, demands, vehicle capacity/limits, and a precomputed Euclidean distance matrix for efficient evaluation. The OR-Tools workflow constructs a routing model with distance and demand callbacks, enforces capacity through a dedicated capacity dimension, applies a PATH_CHEAPEST_ARC initial solution followed by Guided Local Search, and prints per-vehicle routes with loads and total distance for consistent benchmarking.
+
+In parallel, NSGA-II represents each solution as a customer permutation that is decoded into capacity-feasible subroutes; fitness is evaluated as a multi-objective tuple minimizing (number of vehicles used, total route cost). The evolutionary loop performs non-dominated sorting with crowding-distance diversity preservation, uses Ordered Crossover (OX) to maintain valid permutations, and applies shuffle mutation to explore neighboring solutions. 
+
+To run the project, execute the OR-Tools solver by placing the selected instance in CSV form (node, x, y, demand) and running the routing script/notebook; for NSGA-II, first convert TXT → JSON using the provided converter (which also builds the distance matrix), then run the NSGA-II program (e.g., in Spyder) by setting the JSON instance path and selecting the target instance to output decoded routes and objective values.
+
+Check out the [Project Presentation Slides](https://docs.google.com/presentation/d/1K_5Acd2OI23vv9k9Tw02uFLIhw8rhNnqHHcj5be5ikI/edit?usp=sharing) for more details.
